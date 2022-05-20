@@ -11,15 +11,26 @@
 
 <script>
 	function goJoinPage(){
-		document.loginForm.action="<c:url value='/members/join.do'/>";
+		/* document.loginForm.action="<c:url value='/members/join.do'/>";
+		document.loginForm.method="GET";
+        document.loginForm.submit(); */
+        
+        location.href = "<c:url value='/members/join.do'/>";
+	}
+	function actionLogin(){
+		document.loginForm.action="<c:url value='/members/login.do'/>";
         document.loginForm.submit();
+	}
+	var message = '${message}';
+	if(message != ''){
+		alert(message);
 	}
 </script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+	
 <body>
-
 <!-- javascript warning tag  -->
 <noscript class="noScriptTitle"><spring:message code="common.noScriptTitle.msg" /></noscript>
 
@@ -45,13 +56,13 @@
 				<c:set var="title"><spring:message code="comUatUia.loginForm.id"/></c:set>
 				<li>
 					<label for="id">${title}</label>
-					<input type="text" name="id" id="id" maxlength="20" title="${title} ${inputTxt}" placeholder="${title} ${inputTxt}">
+					<input type="text" name="memberId" id="id" value="${memberForm.memberId }" maxlength="20" title="${title} ${inputTxt}" placeholder="${title} ${inputTxt}">
 				</li>
 				<!-- 비밀번호 -->
 				<c:set var="title"><spring:message code="comUatUia.loginForm.pw"/></c:set>
 				<li>
 					<label for="password">${title}</label>
-					<input type="password" name="password" id="password" maxlength="20" title="${title} ${inputTxt}" placeholder="${title} ${inputTxt}">
+					<input type="password" name="password" id="password" value="${memberForm.password }" maxlength="20" title="${title} ${inputTxt}" placeholder="${title} ${inputTxt}">
 				</li>
 				<!-- 아이디 저장 -->
 				<c:set var="title"><spring:message code="comUatUia.loginForm.idSave"/></c:set>

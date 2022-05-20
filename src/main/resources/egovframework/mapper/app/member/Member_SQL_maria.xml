@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberDAO">
+	<insert id = "insertMember">
+	    INSERT INTO tb_member
+			(
+			    member_id, member_name, member_password, member_phone, create_at, update_at
+			 )
+			VALUES
+			(
+			    #{memberId}, #{memberName}, #{memberPassword}, #{memberPhone}, SYSDATE(), SYSDATE()
+			 )
+	</insert>
+	
+	<select id="selectLoginCheck" resultType = "egovframework.app.member.vo.MemberVO">
+	    SELECT member_seq, member_id, member_name, member_phone
+	    FROM tb_member
+	    WHERE member_id = #{memberId} AND member_password = #{memberPassword}
+	</select>
+</mapper>
