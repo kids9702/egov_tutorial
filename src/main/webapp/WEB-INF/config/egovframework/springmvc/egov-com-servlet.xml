@@ -14,7 +14,7 @@
 	</context:component-scan>
 	
 	<!-- For Pagination Tag -->
-	<bean id="imageRenderer" class="egovframework.com.cmm.ImagePaginationRenderer"/>
+	<bean id="imageRenderer" class="egovframework.com.cmm.ImagePaginationRenderer2"/>
 
 	<bean id="paginationManager" class="egovframework.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager">
 		<property name="rendererType">

@@ -1,11 +1,14 @@
 package egovframework.app.member.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import egovframework.app.member.service.MemberService;
 import egovframework.app.member.vo.MemberVO;
+import egovframework.app.member.vo.SearchVO;
 import egovframework.com.utl.fcc.service.EgovStringUtil;
 import egovframework.com.utl.sim.service.EgovFileScrty;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -49,5 +52,16 @@ public class MemberServiceImpl extends EgovAbstractServiceImpl implements Member
 		MemberVO member = memberDAO.selectLoginCheck(memberVO);
 		return member;
 		
+	}
+
+	@Override
+	public List<MemberVO> list(SearchVO searchVO) {
+		List<MemberVO> memberList = memberDAO.selectMemberList(searchVO);
+		return memberList;
+	}
+
+	@Override
+	public int count(SearchVO searchVO) {
+			return memberDAO.selectMemberListCnt(searchVO);
 	}
 }

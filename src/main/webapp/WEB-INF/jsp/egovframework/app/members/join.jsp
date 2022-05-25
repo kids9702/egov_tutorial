@@ -17,9 +17,44 @@
 
 <script>
 	function join(){
+		// 유효성 검사
+		
+		// 1. id
+		var memberId = document.joinForm.memberId.value;
+        if (memberId == '' || memberId == undefined) {
+           alert("ID를 입력해주세요");
+           document.joinForm.memberId.focus();
+           return;
+        }
+
+		
+		// 2. 이름
+		var memberName = document.joinForm.memberName.value;
+        if (memberName == '' || memberName == undefined) {
+            alert("이름을 입력해주세요");
+            document.joinForm.memberName.focus();
+            return;
+        }
+        
+        // 3. 비밀번호 조건 확인
+        var result = isMoreThan2CharTypeComb(document.joinForm.password);
+        if(!result) {
+            alert("비밀번호를 다시 설정해주세요.")
+            return;
+		}
+		
 		document.joinForm.action = '<c:url value="/members/join.do"/>';
 		document.joinForm.submit();
 	}
+	
+    function isMoreThan2CharTypeComb(pwdField) {
+    
+        var pwd = pwdField.value;
+        
+        var passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*?])[A-Za-z\d~!@#$%^&*?]+$/;
+        
+        return passRegex.test(pwd) ? pwdField : false;
+    }
 </script>
 </head>
 <body>
@@ -94,7 +129,7 @@
 		
 			<!-- 하단 버튼 --> 
 			<div class="btn">
-				<input type="submit" onclick = "join();" class="s_submit" value="<spring:message code="button.create" />" title="<spring:message code="button.create" /> <spring:message code="input.button" />" />
+				<input type="button" onclick = "join();" class="s_submit" value="<spring:message code="button.create" />" title="<spring:message code="button.create" /> <spring:message code="input.button" />" />
 			</div><div style="clear:both;"></div>
 		
 		</div><!-- div end(wTableFrm)  -->

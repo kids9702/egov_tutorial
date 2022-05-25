@@ -19,4 +19,46 @@
 	    FROM tb_member
 	    WHERE member_id = #{memberId} AND member_password = #{memberPassword}
 	</select>
+	
+	<select id="selectMemberList" resultType = "egovframework.app.member.vo.MemberVO">
+	    SELECT member_seq, member_id, member_name, member_phone, create_at
+	    FROM tb_member
+	    
+	    WHERE 1=1
+	    
+	    <include refid="memberSearch"></include>
+	    
+	    LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+	</select>
+	
+	<select id="selectMemberListCnt" resultType="java.lang.Integer">
+		SELECT COUNT(member_seq)
+		FROM tb_member
+		
+		WHERE 1=1
+	    <include refid="memberSearch"></include>
+	</select>
+	
+	<sql id="memberSearch">
+	    <if test="searchCnd ==1">
+	        AND member_name LIKE CONCAT ('%', #{searchWrd}, '%')
+	    </if>
+	    
+	    <if test="searchCnd ==2">
+	        AND member_id LIKE CONCAT ('%', #{searchWrd}, '%')
+	    </if>
+	    
+	    <if test="searchCnd ==3">
+	        AND member_phone LIKE CONCAT ('%', #{searchWrd}, '%')
+	    </if>
+	    
+	    <if test="searchCnd ==0">
+	        AND (member_name LIKE CONCAT ('%', #{searchWrd}, '%')
+	            OR
+	            member_id LIKE CONCAT ('%', #{searchWrd}, '%')
+	            OR
+	            member_phone LIKE CONCAT ('%', #{searchWrd}, '%')
+	            )
+	    </if>
+	</sql>
 </mapper>

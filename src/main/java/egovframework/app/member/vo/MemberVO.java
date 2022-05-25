@@ -51,4 +51,12 @@ public class MemberVO {
 	public void setUpdateAt(String updateAt) {
 		this.updateAt = updateAt;
 	}
+	@Override
+	public String toString() {
+		return "MemberVO [memberSeq=" + memberSeq + ", memberId=" + memberId + ", memberName=" + memberName
+				+ ", memberPassword=" + memberPassword + ", memberPhone=" + memberPhone + ", createAt=" + createAt
+				+ ", updateAt=" + updateAt + "]";
+	}
+	
+	
 }
