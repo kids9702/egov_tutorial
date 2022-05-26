@@ -13,6 +13,19 @@
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/egovframework/com/com.css' />">
 <link href="<c:url value='/css/egovframework/com/cop/tpl/egovBaseTemplate.css' />" rel="stylesheet" type="text/css">
 
+<script>
+	function getNoticeList(pageNo) {
+		document.frm.pageIndex.value = pageNo;
+		document.frm.action = "<c:url value='/notice/list.do'/>";
+		document.frm.submit();
+	}
+	
+	function getNoticeDetail(noticeSeq) {
+		document.frm.noticeSeq.value = noticeSeq;
+		document.frm.action = "<c:url value='/notice/detail.do'/>";
+		document.frm.submit();
+	}
+</script>
 </head>
 <body>
 <div class="board">
@@ -44,7 +57,8 @@
 		<thead>
 			<tr>
 				<th>번호</th>
-				<th>제목</th>
+				<th>제목V1</th>
+				<th>제목V2</th>
 				<th>작성자</th>
 				<th>생성일</th>
 				<th>수정일</th>
@@ -55,10 +69,13 @@
 			<c:forEach var="notice" items="${noticeList}" varStatus="noticeStatus">
 			<tr>
 				<td>${noticeStatus.index + 1}</td>
-				<td>${notice.noticeTitle}</td>
+				<!-- V1 -->
+				<td><a href="<c:url value='/notice/${notice.noticeSeq}'/>">${notice.noticeTitle}</a></td>
+				<!-- V2 -->
+				<td><a href="#" onclick="getNoticeDetail(${notice.noticeSeq})">${notice.noticeTitle}</a></td>
 				<td>${notice.memberName}</td>
-				<td>${notice.createAt}</td>
-				<td>${notice.updateAt}</td>
+				<td>${notice.createAt }</td>
+				<td>${notice.updateAt }</td>
 			</tr>
 			</c:forEach>
 		</tbody>
@@ -68,7 +85,7 @@
 	<!-- paging navigation -->
 	<div class="pagination">
 		<ul>
- 		<<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction=""/>
+ 		<<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="getNoticeList"/>
 		</ul>
 	</div>
 </div>

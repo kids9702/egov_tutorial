@@ -3,10 +3,18 @@ package egovframework.app.notice.vo;
 public class NoticeDTO {
     private int noticeSeq;
     private String noticeTitle;
+    private String noticeContents;
     private String memberName;
     private String createAt;
     private String updateAt;
+    private String atchFileId;
     
+    public String getAtchFileId() {
+        return atchFileId;
+    }
+    public void setAtchFileId(String atchFileId) {
+        this.atchFileId = atchFileId;
+    }
     public int getNoticeSeq() {
         return noticeSeq;
     }
@@ -15,6 +23,12 @@ public class NoticeDTO {
     }
     public String getNoticeTitle() {
         return noticeTitle;
+    }
+    public String getNoticeContents() {
+        return noticeContents;
+    }
+    public void setNoticeContents(String noticeContents) {
+        this.noticeContents = noticeContents;
     }
     public void setNoticeTitle(String noticeTitle) {
         this.noticeTitle = noticeTitle;
@@ -39,9 +53,9 @@ public class NoticeDTO {
     }
     @Override
     public String toString() {
-        return "NoticeDTO [noticeSeq=" + noticeSeq + ", noticeTitle=" + noticeTitle + ", memberName=" + memberName
-                + ", createAt=" + createAt + ", updateAt=" + updateAt + "]";
+        return "NoticeDTO [noticeSeq=" + noticeSeq + ", noticeTitle=" + noticeTitle + ", noticeContents="
+                + noticeContents + ", memberName=" + memberName + ", createAt=" + createAt + ", updateAt=" + updateAt
+                + ", atchFileId=" + atchFileId + "]";
     }
-    
     
 }

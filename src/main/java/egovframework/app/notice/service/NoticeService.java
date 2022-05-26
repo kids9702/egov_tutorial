@@ -12,4 +12,6 @@ public interface NoticeService {
     List<NoticeDTO> list(SearchVO searchVO);
 
     int count(SearchVO searchVO);
+
+    NoticeDTO detail(int noticeSeq);
 }

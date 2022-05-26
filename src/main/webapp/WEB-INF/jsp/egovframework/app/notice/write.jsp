@@ -24,7 +24,7 @@
 </head>
 <body>
 
-<form id="noticeForm" name="noticeForm" method="post"> 
+<form id="noticeForm" name="noticeForm" method="post" enctype="multipart/form-data"> 
 <div class="wTableFrm">
     <!-- 타이틀 -->
     <h2>게시글 등록</h2><!-- 게시글 등록 -->
@@ -55,6 +55,12 @@
             <th><label for="">내용 <span class="pilsu">*</span></label></th>
             <td class="" colspan="3">
                 <textarea id="noticeContents" name="noticeContents" title="내용 입력" rows="20" cols="300"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>첨부파일</th>
+            <td conlspan="3">
+                <input type="file" name="file_1">
             </td>
         </tr>
 

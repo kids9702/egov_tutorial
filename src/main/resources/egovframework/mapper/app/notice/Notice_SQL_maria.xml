@@ -6,11 +6,11 @@
     <insert id="insertNotice">
 	         INSERT INTO tb_notice
              (
-                 notice_title, notice_contents, member_seq, create_at, update_at
+                 notice_title, notice_contents, member_seq, create_at, update_at, atch_file_id
              )
              VALUES
              (
-                 #{noticeTitle}, #{noticeContents}, #{memberSeq}, SYSDATE(), SYSDATE()
+                 #{noticeTitle}, #{noticeContents}, #{memberSeq}, SYSDATE(), SYSDATE(), #{atchFileId}
              )
     </insert>
     <select id="selectNoticeList" resultType = "egovframework.app.notice.vo.NoticeDTO">
@@ -32,6 +32,15 @@
 	    ON B.member_seq = A.member_seq
 		WHERE 1=1
 	    <include refid="noticeSearch"></include>
+	</select>
+	
+	<select id="selectNotice" resultType="egovframework.app.notice.vo.NoticeDTO">
+		SELECT A.notice_seq, A.notice_title, A.notice_contents, A.create_at, A.update_at, B.member_name, A.atch_file_id
+		FROM tb_notice A
+		JOIN tb_member B
+		ON A.member_seq = B.member_seq
+		
+		WHERE A.notice_seq = #{noticeSeq}
 	</select>
 	
 	<sql id="noticeSearch">

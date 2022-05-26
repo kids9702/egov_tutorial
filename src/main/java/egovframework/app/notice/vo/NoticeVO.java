@@ -7,7 +7,15 @@ public class NoticeVO {
     private int memberSeq;
     private String createAt;
     private String updateAt;
+    private String atchFileId;
     
+    
+    public String getAtchFileId() {
+        return atchFileId;
+    }
+    public void setAtchFileId(String atchFileId) {
+        this.atchFileId = atchFileId;
+    }
     public int getNoticeSeq() {
         return noticeSeq;
     }
@@ -48,7 +56,7 @@ public class NoticeVO {
     public String toString() {
         return "NoticeVO [noticeSeq=" + noticeSeq + ", noticeTitle=" + noticeTitle + ", noticeContents="
                 + noticeContents + ", memberSeq=" + memberSeq + ", createAt=" + createAt + ", updateAt=" + updateAt
-                + "]";
+                + ", atchFileId=" + atchFileId + "]";
     }
     
     

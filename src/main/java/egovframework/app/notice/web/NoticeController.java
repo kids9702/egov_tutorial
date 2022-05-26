@@ -2,6 +2,7 @@ package egovframework.app.notice.web;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +10,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import egovframework.app.member.vo.MemberForm;
-import egovframework.app.member.vo.MemberVO;
 import egovframework.app.member.vo.SearchVO;
 import egovframework.app.notice.service.NoticeService;
 import egovframework.app.notice.vo.NoticeDTO;
 import egovframework.app.notice.vo.NoticeForm;
 import egovframework.app.notice.vo.NoticeVO;
+import egovframework.com.cmm.service.EgovFileMngService;
+import egovframework.com.cmm.service.EgovFileMngUtil;
+import egovframework.com.cmm.service.FileVO;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Controller
@@ -31,6 +36,13 @@ public class NoticeController {
         this.noticeService = noticeService;
     }
     
+    @Resource(name = "EgovFileMngService")
+    private EgovFileMngService fileMngService;
+
+    @Resource(name = "EgovFileMngUtil")
+    private EgovFileMngUtil fileUtil;
+
+    
     @GetMapping("/notice/write.do")
     public String writePage(HttpSession session) {
         if(session.getAttribute("memberSeq") == null) {
@@ -41,20 +53,39 @@ public class NoticeController {
     
 
     @PostMapping("/notice/write.do")
-    public String write(NoticeForm noticeForm, HttpSession session) {
+    public String write(NoticeForm noticeForm, HttpSession session, MultipartHttpServletRequest request) throws Exception {
+        
+        //NoticeVO noticeVO = new NoticeVO();
+        //매번 noticeVO 객체를 불러와 값을 주는 것은 번거로움 => BeanUtils 사용
+        //noticeVO.setNoticeTitle(noticeForm.getNoticeTitle());
+        //BeanUtils.copyProperties(noticeForm, noticeVO);
+        
         if(session.getAttribute("memberSeq") == null) {
-            return "redirect:/members/main.do";
+            return "redirect:/members/login.do";
         }
         
-//        NoticeVO noticeVO = new NoticeVO();
-//        BeanUtils.copyProperties(noticeForm, noticeVO);
+        List<MultipartFile> files = request.getFiles("file_1");
+        
+        for(MultipartFile file:files) {
+            System.out.println("###############" + file.getOriginalFilename());
+        }
+        
+        String atchFileId = "";
+        if (!files.isEmpty()) {
+            List<FileVO> result = fileUtil.parseFileInf(files, "BBS_", 0, "", "");
+            atchFileId = fileMngService.insertFileInfs(result);
+        }
+        
         NoticeVO noticeVO = noticeForm.toVO();
         
         int memberSeq = Integer.parseInt(session.getAttribute("memberSeq").toString());
         noticeVO.setMemberSeq(memberSeq);
+        noticeVO.setAtchFileId(atchFileId);
         
+        //System.out.println(noticeVO.getNoticeTitle());
         noticeService.write(noticeVO);
-        return "/notice/list.do";
+        
+        return "redirect:/notice/list.do";
     }
     
     @RequestMapping("/notice/list.do")
@@ -79,5 +110,22 @@ public class NoticeController {
         model.addAttribute("searchVO", searchVO);
         
         return "egovframework/app/notice/list";
+    }
+    
+    @RequestMapping("/notice/{noticeSeq}")
+    public String noticeDetailV1(@PathVariable int noticeSeq, ModelMap model) {
+        
+        NoticeDTO notice = noticeService.detail(noticeSeq);
+        model.addAttribute("notice", notice);
+        return "egovframework/app/notice/detail";
+    }
+    
+    @RequestMapping("/notice/detail.do")
+    public String noticeDetailV2(int noticeSeq, ModelMap model) {
+        
+        NoticeDTO notice = noticeService.detail(noticeSeq);
+        System.out.println(notice);
+        model.addAttribute("notice", notice);
+        return "egovframework/app/notice/detail";
     }
 }

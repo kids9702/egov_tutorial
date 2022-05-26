@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -28,12 +32,12 @@
 	<tbody>
 		<tr>
 			<th>제목</th>
-			<td class="left" colspan="2">
-			    
+			<td class="left">
+                ${notice.noticeTitle}
 			</td>
 			<th>작성자</th>
 			<td class="left">
-			    
+			    ${notice.memberName}
 			</td>
 		</tr>
 		<!-- 글 내용  -->
@@ -41,19 +45,23 @@
 		<tr>
 			<th>내용</th>
 			<td class="" colspan="3">
-				
+				${notice.noticeContents}
+			</td>
+		</tr>
+		
+		<tr>
+			<th>첨부파일</th>
+			<td colspan="3">
+				<c:import url="/cmm/fms/selectFileInfs.do" charEncoding="utf-8">
+					<c:param name="param_atchFileId" value="${notice.atchFileId}"/>
+				</c:import>
 			</td>
 		</tr>
 
 	</tbody>
 	</table>
 
-	<!-- 하단 버튼 -->
-	<div class="btn">
-		<input type="button" class="s_submit" value="등록" title="등록 버튼" /><!-- 등록 -->
-		<span class="btn_s"><a href=""  title="목록  버튼">목록</a></span><!-- 목록 -->
-	</div><div style="clear:both;"></div>
-	
+
 </div>
 </form>
 </body>

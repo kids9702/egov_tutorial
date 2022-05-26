@@ -35,4 +35,9 @@ public class NoticeServiceImpl implements NoticeService{
         return noticeDAO.getCount(searchVO);
     }
 
+    @Override
+    public NoticeDTO detail(int noticeSeq) {
+        return noticeDAO.selectNotice(noticeSeq);
+    }
+
 }

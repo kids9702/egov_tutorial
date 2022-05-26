@@ -58,7 +58,7 @@ public class MemberController {
 		
 		
 		// 메인페이지로 변경
-		return "redirect:/members/main.do";
+		return "egovframework/app/members/main";
 	}
 	
 	@GetMapping("/members/join.do")

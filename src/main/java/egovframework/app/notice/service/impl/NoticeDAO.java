@@ -23,4 +23,7 @@ public class NoticeDAO extends EgovComAbstractDAO{
         return selectOne("NoticeDAO.selectNoticeListCnt", searchVO);
     }
 
+    public NoticeDTO selectNotice(int noticeSeq) {
+        return selectOne("NoticeDAO.selectNotice", noticeSeq);
+    }
 }
