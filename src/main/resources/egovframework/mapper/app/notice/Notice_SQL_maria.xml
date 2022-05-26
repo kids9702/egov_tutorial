@@ -4,13 +4,56 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="NoticeDAO">
     <insert id="insertNotice">
-	         INSET INTO tb_notice
+	         INSERT INTO tb_notice
              (
                  notice_title, notice_contents, member_seq, create_at, update_at
              )
-         VALUES
+             VALUES
              (
                  #{noticeTitle}, #{noticeContents}, #{memberSeq}, SYSDATE(), SYSDATE()
              )
     </insert>
+    <select id="selectNoticeList" resultType = "egovframework.app.notice.vo.NoticeDTO">
+	    SELECT A.notice_seq, A.notice_title, A.create_at, A.update_at, B.member_name
+	    FROM tb_notice A
+	    JOIN tb_member B
+	    ON B.member_seq = A.member_seq
+	    WHERE 1=1
+	    
+	    <include refid="noticeSearch"></include>
+	    
+	    LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+	</select>
+	
+	<select id="selectNoticeListCnt" resultType="java.lang.Integer">
+		SELECT COUNT(A.notice_seq)
+		FROM tb_notice A
+	    JOIN tb_member B
+	    ON B.member_seq = A.member_seq
+		WHERE 1=1
+	    <include refid="noticeSearch"></include>
+	</select>
+	
+	<sql id="noticeSearch">
+	    <if test="searchCnd ==1">
+	        AND A.notice_title LIKE CONCAT ('%', #{searchWrd}, '%')
+	    </if>
+	    
+	    <if test="searchCnd ==2">
+	        AND A.notice_contents LIKE CONCAT ('%', #{searchWrd}, '%')
+	    </if>
+	    
+	    <if test="searchCnd ==3">
+	        AND B.member_name LIKE CONCAT ('%', #{searchWrd}, '%')
+	    </if>
+	    
+	    <if test="searchCnd ==0">
+	        AND (A.notice_title LIKE CONCAT ('%', #{searchWrd}, '%')
+	            OR
+	            A.notice_contents LIKE CONCAT ('%', #{searchWrd}, '%')
+	            OR
+	            B.member_name LIKE CONCAT ('%', #{searchWrd}, '%')
+	            )
+	    </if>
+	</sql>
 </mapper>

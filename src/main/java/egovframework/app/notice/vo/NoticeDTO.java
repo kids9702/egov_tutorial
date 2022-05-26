@@ -1,10 +1,9 @@
 package egovframework.app.notice.vo;
 
-public class NoticeVO {
+public class NoticeDTO {
     private int noticeSeq;
     private String noticeTitle;
-    private String noticeContents;
-    private int memberSeq;
+    private String memberName;
     private String createAt;
     private String updateAt;
     
@@ -20,17 +19,11 @@ public class NoticeVO {
     public void setNoticeTitle(String noticeTitle) {
         this.noticeTitle = noticeTitle;
     }
-    public String getNoticeContents() {
-        return noticeContents;
+    public String getMemberName() {
+        return memberName;
     }
-    public void setNoticeContents(String noticeContents) {
-        this.noticeContents = noticeContents;
-    }
-    public int getMemberSeq() {
-        return memberSeq;
-    }
-    public void setMemberSeq(int memberSeq) {
-        this.memberSeq = memberSeq;
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
     public String getCreateAt() {
         return createAt;
@@ -46,9 +39,8 @@ public class NoticeVO {
     }
     @Override
     public String toString() {
-        return "NoticeVO [noticeSeq=" + noticeSeq + ", noticeTitle=" + noticeTitle + ", noticeContents="
-                + noticeContents + ", memberSeq=" + memberSeq + ", createAt=" + createAt + ", updateAt=" + updateAt
-                + "]";
+        return "NoticeDTO [noticeSeq=" + noticeSeq + ", noticeTitle=" + noticeTitle + ", memberName=" + memberName
+                + ", createAt=" + createAt + ", updateAt=" + updateAt + "]";
     }
     
     
